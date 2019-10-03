@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
@@ -45,8 +47,17 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     api 'com.google.android.material:material:1.1.0-alpha10'
 
+    //Room
+    implementation 'androidx.room:room-runtime:2.2.0-rc01'
+    kapt 'androidx.room:room-compiler:2.2.0-rc01'
+    annotationProcessor 'androidx.room:room-compiler:2.2.0-rc01'
+
     //Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //Modules
+    implementation project(':remote')
+    implementation project(':local')
 }
