@@ -7,6 +7,9 @@ import com.eduramza.api.source.IdWallApi
 import com.eduramza.local.dao.UserDao
 import com.eduramza.local.model.LoginResponse
 import com.eduramza.local.model.UserPreferences
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class LoginRepositoryImpl(private val idWallApi: IdWallApi,
                           private val userDao: UserDao,
@@ -21,22 +24,24 @@ class LoginRepositoryImpl(private val idWallApi: IdWallApi,
 
     override suspend fun doLogin(email: String) {
         clearError()
-        try {
-            val result = idWallApi.signup(LoginRequest(email))
-            successLiveData.postValue(result.user)
-            userDao.insert(result.user)
+        if (databaseLogin(email).isNullOrEmpty()){
+            try {
+                val result = idWallApi.signup(LoginRequest(email))
+                with(result){
+                    saveLoggedUser(this.user)
+                }
 
-            prefs.save(prefs.USER_ID, result.user.id)
-
-        } catch (e: Exception){
-            errorLiveData.postValue(e.localizedMessage)
+            } catch (e: Exception){
+                errorLiveData.postValue(e.localizedMessage)
+            }
         }
     }
 
     override fun userIsLogged(){
+        prefs.clearSharedPreference()
         if (userCase.isLogged()){
             try {
-                val dbResult = userDao.getUser(prefs.getValueString(prefs.USER_ID)!!).value
+                val dbResult = userDao.getUserLogged(prefs.getValueString(prefs.USER_ID)!!).value
                 successLiveData.postValue(dbResult)
             } catch (e: Exception){
                 prefs.clearSharedPreference()
@@ -45,7 +50,21 @@ class LoginRepositoryImpl(private val idWallApi: IdWallApi,
         }
     }
 
-    fun clearError(){
+    override fun databaseLogin(email: String): String? {
+        val result = userDao.getUserSinup(email).value
+        if (!result?.id.isNullOrEmpty()){
+            saveLoggedUser(result!!)
+        }
+        return result?.id
+    }
+
+    private fun saveLoggedUser(user: LoginResponse.User) = GlobalScope.launch(Dispatchers.IO) {
+        successLiveData.postValue(user)
+        userDao.insert(user)
+        prefs.save(prefs.USER_ID, user.id)
+    }
+
+    private fun clearError(){
         errorLiveData.postValue("")
     }
 

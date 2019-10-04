@@ -11,7 +11,7 @@ import com.eduramza.local.model.LoginResponse
 interface UserDao {
 
     @Query("SELECT * FROM user WHERE id = :id")
-    fun getUser(id: String): LiveData<LoginResponse.User>
+    fun getUserLogged(id: String): LiveData<LoginResponse.User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg user: LoginResponse.User)
@@ -19,4 +19,6 @@ interface UserDao {
     @Query("SELECT token FROM user WHERE id =  :id")
     fun getToken(id: String): String
 
+    @Query("SELECT * FROM user WHERE email = :email")
+    fun getUserSinup(email: String): LiveData<LoginResponse.User>
 }
