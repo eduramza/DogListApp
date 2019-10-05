@@ -32,6 +32,7 @@ class LoginRepositoryImpl(private val idWallApi: IdWallApi,
                 }
 
             } catch (e: Exception){
+                val eee = e.cause
                 errorLiveData.postValue(e.localizedMessage)
             }
         }
