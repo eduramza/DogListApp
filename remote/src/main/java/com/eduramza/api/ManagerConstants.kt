@@ -9,6 +9,8 @@ class Routes {
 
 //region - Error
 const val ERROR_INVALID_EMAIL = "HTTP 400 "
+const val ERROR_EMAIL_IS_EMPTY = ""
 
 const val ERROR_INVALID_EMAIL_RESPONSE = "E-mail inválido!"
+const val ERROR_EMAIL_IS_EMPTY_RESPONSE = "Este campo deve ser preenchido"
 //endregion

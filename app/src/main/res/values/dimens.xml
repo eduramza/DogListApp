@@ -5,5 +5,5 @@
     <dimen name="text_card_dog">32sp</dimen>
     <dimen name="mrg_top_card_dog">20dp</dimen>
     <dimen name="card_elevation">8dp</dimen>
-    <dimen name="stroke_card_size">2dp</dimen>
+    <dimen name="stroke_card_size">1dp</dimen>
 </resources>

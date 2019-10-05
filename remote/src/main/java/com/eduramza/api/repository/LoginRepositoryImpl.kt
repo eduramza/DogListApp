@@ -27,21 +27,26 @@ class LoginRepositoryImpl(private val idWallApi: IdWallApi,
 
     override suspend fun doLogin(email: String) {
         clearError()
-        if (databaseLogin(email).isNullOrEmpty()){
-            try {
-                val result = idWallApi.signup(LoginRequest(email))
-                with(result){
-                    saveLoggedUser(this.user)
-                }
+        if (email.isNotBlank()){
+            if (databaseLogin(email).isNullOrEmpty()){
+                try {
+                    val result = idWallApi.signup(LoginRequest(email))
+                    with(result){
+                        saveLoggedUser(this.user)
+                    }
 
-            } catch (e: Exception){
-                val isInvalid = userCase.verifyEmailInvalid(e.localizedMessage)
-                if (isInvalid.isBlank()){
-                    errorGeneric.postValue(true)
+                } catch (e: Exception){
+                    val isInvalid = userCase.verifyEmailInvalid(e.localizedMessage)
+                    if (isInvalid.isBlank()){
+                        errorGeneric.postValue(true)
+                    }
+                    errorInvalidEmail.postValue(isInvalid)
                 }
-                errorInvalidEmail.postValue(isInvalid)
             }
+        } else {
+            errorInvalidEmail.postValue(userCase.verifyEmailInvalid(email))
         }
+
     }
 
     override fun userIsLogged(){
