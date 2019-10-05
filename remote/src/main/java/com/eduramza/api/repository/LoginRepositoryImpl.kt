@@ -16,8 +16,11 @@ class LoginRepositoryImpl(private val idWallApi: IdWallApi,
                           private val prefs: UserPreferences,
                           private val userCase: UserUseCase) : LoginRepository{
 
-    private val errorLiveData = MutableLiveData<String>()
-    override fun getException() = errorLiveData
+    private val errorInvalidEmail = MutableLiveData<String>()
+    override fun getInvalidEmail() = errorInvalidEmail
+
+    private val errorGeneric = MutableLiveData<Boolean>()
+    override fun getGenericError() = errorGeneric
 
     private val successLiveData = MutableLiveData<LoginResponse.User>()
     override fun getSuccess() = successLiveData
@@ -32,8 +35,11 @@ class LoginRepositoryImpl(private val idWallApi: IdWallApi,
                 }
 
             } catch (e: Exception){
-                val eee = e.cause
-                errorLiveData.postValue(e.localizedMessage)
+                val isInvalid = userCase.verifyEmailInvalid(e.localizedMessage)
+                if (isInvalid.isBlank()){
+                    errorGeneric.postValue(true)
+                }
+                errorInvalidEmail.postValue(isInvalid)
             }
         }
     }
@@ -46,7 +52,7 @@ class LoginRepositoryImpl(private val idWallApi: IdWallApi,
                 successLiveData.postValue(dbResult)
             } catch (e: Exception){
                 prefs.clearSharedPreference()
-                e.printStackTrace()
+                errorGeneric.postValue(true)
             }
         }
     }
@@ -66,7 +72,8 @@ class LoginRepositoryImpl(private val idWallApi: IdWallApi,
     }
 
     private fun clearError(){
-        errorLiveData.postValue("")
+        errorInvalidEmail.postValue("")
+        errorGeneric.postValue(false)
     }
 
 }

@@ -13,13 +13,12 @@ import org.koin.dsl.module
 
 val appModule = module {
 
-    single { IdWallService().getRemoteService() }
-
     viewModel { LoginViewModel(get()) }
 
-    single { UserPreferences(get()) }
+}
 
-    single { UserUseCase(get()) }
+val remoteDbModule = module{
+    single { IdWallService().getRemoteService() }
 
     single<LoginRepository> { LoginRepositoryImpl(get(), get(), get(), get())}
 }
@@ -34,5 +33,8 @@ val localDbModule = module {
     }
 
     factory { get<DogListDatabase>().userDao() }
+
+    single { UserPreferences(get()) }
+    single { UserUseCase(get()) }
 
 }

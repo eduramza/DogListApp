@@ -52,6 +52,12 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.2.0-rc01'
     annotationProcessor 'androidx.room:room-compiler:2.2.0-rc01'
 
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+
+    //Lottie
+    implementation "com.airbnb.android:lottie:$lottie_Version"
+
     //Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

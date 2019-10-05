@@ -6,3 +6,9 @@ class Routes {
         const val SIGNUP_ROUTE = "signup"
     }
 }
+
+//region - Error
+const val ERROR_INVALID_EMAIL = "HTTP 400 "
+
+const val ERROR_INVALID_EMAIL_RESPONSE = "E-mail inválido!"
+//endregion

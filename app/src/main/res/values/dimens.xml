@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="height_logo">200dp</dimen>
+    <dimen name="spacing_std">16dp</dimen>
+    <dimen name="text_card_dog">32sp</dimen>
+    <dimen name="mrg_top_card_dog">20dp</dimen>
+    <dimen name="card_elevation">8dp</dimen>
+    <dimen name="stroke_card_size">2dp</dimen>
 </resources>
