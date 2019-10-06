@@ -1,4 +1,4 @@
-package com.eduramza.api.repository
+package com.eduramza.api.repository.login
 
 import androidx.lifecycle.MutableLiveData
 import com.eduramza.local.model.LoginResponse
@@ -10,4 +10,5 @@ interface LoginRepository {
     fun userIsLogged()
     fun databaseLogin(email: String): String?
     fun getGenericError(): MutableLiveData<Boolean>
+    fun clearSuccessLiveData()
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.eduramza.doglist.R
 import com.eduramza.doglist.ui.home.HomeActivity
 import com.eduramza.doglist.ui.loading.LoadingFragment
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.login_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -34,15 +35,22 @@ class LoginFragment : Fragment(), LoadingFragment.LoadingListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
         btn_login.setOnClickListener {
             loginViewModel.doLogin(edit_email.text.toString())
         }
+        tv_about_dev.setOnClickListener {
+            Snackbar.make(it, "Que tal me convidar para um café?", Snackbar.LENGTH_LONG).show()
+        }
+
         setupObserver()
     }
 
     private fun setupObserver(){
-        loginViewModel.getSuccess().observe(this, Observer {
-            openHome()
+        loginViewModel.getSuccess().observe(this, Observer { success ->
+            success?.let {
+                openHome()
+            }
         })
 
         loginViewModel.getError().observe(this, Observer {

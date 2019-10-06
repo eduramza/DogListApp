@@ -9,7 +9,7 @@ data class LoginResponse(
     @SerializedName("user")
     val user: User
 ) {
-    @Entity(tableName = "User")
+    @Entity(tableName = "User_Table")
     data class User(
 
         @SerializedName("createdAt")

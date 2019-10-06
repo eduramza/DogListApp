@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/pad_std_gallery"
+        android:paddingLeft="@dimen/pad_std_gallery"
+        android:paddingRight="@dimen/pad_std_gallery"
+        tools:context=".ui.home.dogs.DogImagesFragment">
+
+    <GridView
+            android:id="@+id/grid_dog_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="auto_fit"
+            android:columnWidth="@dimen/colum_width"
+            android:horizontalSpacing="@dimen/spacing_between_item_list"
+            android:verticalSpacing="@dimen/spacing_between_item_list"
+            android:gravity="center"
+            android:background="@android:color/white">
+
+    </GridView>
+
+</FrameLayout>

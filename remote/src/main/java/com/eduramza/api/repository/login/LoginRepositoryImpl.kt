@@ -1,5 +1,6 @@
-package com.eduramza.api.repository
+package com.eduramza.api.repository.login
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.eduramza.api.UserUseCase
 import com.eduramza.api.model.LoginRequest
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 class LoginRepositoryImpl(private val idWallApi: IdWallApi,
                           private val userDao: UserDao,
                           private val prefs: UserPreferences,
-                          private val userCase: UserUseCase) : LoginRepository{
+                          private val userCase: UserUseCase) : LoginRepository {
 
     private val errorInvalidEmail = MutableLiveData<String>()
     override fun getInvalidEmail() = errorInvalidEmail
@@ -50,20 +51,21 @@ class LoginRepositoryImpl(private val idWallApi: IdWallApi,
     }
 
     override fun userIsLogged(){
-        prefs.clearSharedPreference()
-        if (userCase.isLogged()){
+        if (userCase.isLogged() != ""){
             try {
-                val dbResult = userDao.getUserLogged(prefs.getValueString(prefs.USER_ID)!!).value
+                val dbResult = userDao.getUserLogged(prefs.token!!)
                 successLiveData.postValue(dbResult)
             } catch (e: Exception){
                 prefs.clearSharedPreference()
                 errorGeneric.postValue(true)
             }
+        } else {
+            clearSuccessLiveData()
         }
     }
 
     override fun databaseLogin(email: String): String? {
-        val result = userDao.getUserSinup(email).value
+        val result = userDao.getUserSinup(email)
         if (!result?.id.isNullOrEmpty()){
             saveLoggedUser(result!!)
         }
@@ -73,12 +75,16 @@ class LoginRepositoryImpl(private val idWallApi: IdWallApi,
     private fun saveLoggedUser(user: LoginResponse.User) = GlobalScope.launch(Dispatchers.IO) {
         successLiveData.postValue(user)
         userDao.insert(user)
-        prefs.save(prefs.USER_ID, user.id)
+        prefs.token = user.token
     }
 
     private fun clearError(){
         errorInvalidEmail.postValue("")
         errorGeneric.postValue(false)
+    }
+
+    override fun clearSuccessLiveData() {
+        successLiveData.postValue(null)
     }
 
 }

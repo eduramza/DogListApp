@@ -2,8 +2,12 @@
 <resources>
     <dimen name="height_logo">200dp</dimen>
     <dimen name="spacing_std">16dp</dimen>
-    <dimen name="text_card_dog">32sp</dimen>
+    <dimen name="text_card_dog">36sp</dimen>
     <dimen name="mrg_top_card_dog">20dp</dimen>
     <dimen name="card_elevation">8dp</dimen>
     <dimen name="stroke_card_size">1dp</dimen>
+    <dimen name="pad_std_gallery">6dp</dimen>
+    <dimen name="spacing_between_item_list">12dp</dimen>
+    <dimen name="colum_width">172dp</dimen>
+    <dimen name="img_size">150dp</dimen>
 </resources>

@@ -38,6 +38,7 @@ class LoadingFragment : DialogFragment() {
         return super.onCreateDialog(savedInstanceState)
 
         val alertBuilder = AlertDialog.Builder(activity)
+        alertBuilder.setCancelable(false)
         return alertBuilder.create()
     }
     override fun onDetach() {
