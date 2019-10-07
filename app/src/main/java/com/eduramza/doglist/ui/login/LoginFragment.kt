@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.eduramza.api.ABOUT_DEV
 import com.eduramza.doglist.R
 import com.eduramza.doglist.ui.home.HomeActivity
 import com.eduramza.doglist.ui.loading.LoadingFragment
@@ -14,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.login_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class LoginFragment : Fragment(), LoadingFragment.LoadingListener {
+class LoginFragment : Fragment(), LoadingFragment.LoadingListener, LifecycleOwner {
 
     companion object {
         fun newInstance() = LoginFragment()
@@ -35,12 +37,13 @@ class LoginFragment : Fragment(), LoadingFragment.LoadingListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        lifecycle.addObserver(loginViewModel)
 
         btn_login.setOnClickListener {
             loginViewModel.doLogin(edit_email.text.toString())
         }
         tv_about_dev.setOnClickListener {
-            Snackbar.make(it, "Que tal me convidar para um café?", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(it, ABOUT_DEV, Snackbar.LENGTH_LONG).show()
         }
 
         setupObserver()
@@ -71,7 +74,10 @@ class LoginFragment : Fragment(), LoadingFragment.LoadingListener {
     }
 
     private fun hideLoading(){
-        loadingFragment.dismiss()
+        if(loadingFragment.isVisible){
+            loadingFragment.dismiss()
+        }
+
     }
 
     override fun showError() {

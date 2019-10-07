@@ -25,6 +25,8 @@ const val HOUND = "hound"
 
 const val PATH = "path"
 
+const val ABOUT_DEV = "Que tal me convidar para um café?"
+
 //region - fragments
 const val FRAGMENT_HOME = "home"
 const val FRAGMENT_LIST = "list"
