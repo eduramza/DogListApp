@@ -61,9 +61,6 @@ dependencies {
     //Zoomage
     implementation "com.jsibbold:zoomage:$zoomage_Version"
 
-    //RecyclerView
-    implementation "com.android.support:recyclerview-v7:$buildToolsVersion"
-
     //Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
