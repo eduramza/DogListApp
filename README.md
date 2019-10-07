@@ -2,7 +2,7 @@
 <h2>Arquitetura:</h2><br />
 Para o Desenvolvimento foi utilizado o padrão MVVM com o auxilio do Android Jetpack(ViewModel, Room, LifecycleOwner) a imagem abaixo serve ara ilustrar a arquitura adotada: 
 
-<img src="https://drive.google.com/file/d/18mL7CMM4blxpVDoVFeiukYNYOWWDf4UD/view?usp=sharing" heigth="150" width="150">
+![Arquitetura](/app/src/main/res/drawable/mvvm_edited.png)
 
 Além disso foi adotada para o desenvolvimento a utilização de uma arquitetura baseada em modularização (modulos ou bibliotecas no Androiod), ou seja, a aplicação foi divida em 3 modulos (serviços), são eles:
 <p><b>local -> </b> responsavel por toda a camada que integra o banco de dados local e model com o auxilio da biblioteca Room.
